@@ -32,19 +32,33 @@ fn test_symbols() {
 }
 
 #[test]
-fn test_number() { 
-  let tokens = lex("4");
-  assert_eq!(tokens.len(), 2);
+fn test_positive_numbers() {
+  let tokens = lex("4 44 4.44");
   assert_eq!(tokens[0].kind, TokenKind::Number(4.0));
-  assert_eq!(tokens[0].span, Span { start: 0, end: 1 });
+  assert_eq!(tokens[1].kind, TokenKind::Number(44.0));
+  assert_eq!(tokens[2].kind, TokenKind::Number(4.44));
 }
 
 #[test]
 fn test_negative_numbers() {
-  let tokens = lex("-4");
-  assert_eq!(tokens.len(), 2);
+  let tokens = lex("-4 -44 -4.44");
   assert_eq!(tokens[0].kind, TokenKind::Number(-4.0));
-  assert_eq!(tokens[0].span, Span { start: 0, end: 2 });
+  assert_eq!(tokens[1].kind, TokenKind::Number(-44.0));
+  assert_eq!(tokens[2].kind, TokenKind::Number(-4.44));
+}
+
+#[test]
+fn test_identifier() {
+  let tokens = lex("enum Foo");
+  assert_eq!(tokens.len(), 3);
+  assert_eq!(tokens[0].kind, TokenKind::Enum);
+  assert_eq!(tokens[1].kind, TokenKind::Identifier(String::from("Foo")));
+}
+
+#[test]
+fn test_string_literals() {
+  let tokens = lex("\"hello\"");
+  assert_eq!(tokens[0].kind, TokenKind::StringLiteral(String::from("hello")));
 }
 
 #[test]

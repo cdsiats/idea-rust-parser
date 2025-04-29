@@ -2,11 +2,12 @@ use std::{iter::Peekable, str::Chars};
 
 use crate::tokens::{Span, Token, TokenKind};
 
+#[allow(dead_code)]
 pub struct Lexer<'a> {
   input: Peekable<Chars<'a>>,
   position: usize
 }
-
+#[allow(dead_code)]
 impl<'a> Lexer<'a> {
   pub fn new(src: &'a str) -> Self {
     Lexer { input: src.chars().peekable(), position: 0 }
