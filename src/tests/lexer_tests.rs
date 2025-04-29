@@ -46,3 +46,43 @@ fn test_negative_numbers() {
   assert_eq!(tokens[0].kind, TokenKind::Number(-4.0));
   assert_eq!(tokens[0].span, Span { start: 0, end: 2 });
 }
+
+#[test]
+fn test_model_keyword() {
+  let tokens = lex("model");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Model);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 5 });
+}
+
+#[test]
+fn test_enum_keyword() {
+  let tokens = lex("enum");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Enum);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 4 });
+}
+
+#[test]
+fn test_type_keyword() {
+  let tokens = lex("type");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Type);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 4 });
+}
+
+#[test]
+fn test_plugin_keyword() {
+  let tokens = lex("plugin");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Plugin);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 6 });
+}
+
+#[test]
+fn test_use_keyword() {
+  let tokens = lex("use");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Use);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 3 });
+}
