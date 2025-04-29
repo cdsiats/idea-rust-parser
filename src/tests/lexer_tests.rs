@@ -28,5 +28,21 @@ fn test_symbols() {
     TokenKind::RBracket,
     TokenKind::Bang,
     TokenKind::EOF,
-]);
+  ]);
+}
+
+#[test]
+fn test_number() { 
+  let tokens = lex("4");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Number(4.0));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 1 });
+}
+
+#[test]
+fn test_negative_numbers() {
+  let tokens = lex("-4");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Number(-4.0));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 2 });
 }
