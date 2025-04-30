@@ -1,9 +1,10 @@
-use crate::{lexer::Lexer, tokens::{self, Span, Token, TokenKind}};
+use crate::{lexer::Lexer, tokens::{Span, Token, TokenKind}};
 
 fn lex(source: &str) -> Vec<Token> {
   Lexer::new(source).tokenize()
 }
 
+#[cfg(test)]
 #[test]
 fn test_empty_input() {
   let tokens = lex("");
@@ -107,4 +108,18 @@ fn test_attribute_identifier() {
   assert_eq!(tokens.len(), 3);
   assert_eq!(tokens[0].kind, TokenKind::AttributeIdentifier("@label".into()));
   assert_eq!(tokens[1].kind, TokenKind::AttributeIdentifier("@is.cte".into()));
+}
+
+#[test]
+fn test_true() {
+  let tokens = lex("true");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Boolean(true));
+}
+
+#[test]
+fn test_false() {
+  let tokens = lex("false");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Boolean(false));
 }
