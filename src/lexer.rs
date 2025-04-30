@@ -130,6 +130,8 @@ impl<'a> Lexer<'a> {
               "prop" => TokenKind::Prop,
               "plugin" => TokenKind::Plugin,
               "use" => TokenKind::Use,
+              "true" => TokenKind::Boolean(true),
+              "false" => TokenKind::Boolean(false),
               _ => TokenKind::Identifier(ident.clone()),
           };
           tokens.push(Token { kind, span: Span { start, end: self.position } });
