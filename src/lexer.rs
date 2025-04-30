@@ -132,6 +132,7 @@ impl<'a> Lexer<'a> {
               "use" => TokenKind::Use,
               "true" => TokenKind::Boolean(true),
               "false" => TokenKind::Boolean(false),
+              "null" => TokenKind::Null,
               _ => TokenKind::Identifier(ident.clone()),
           };
           tokens.push(Token { kind, span: Span { start, end: self.position } });

@@ -1,4 +1,4 @@
-use crate::{lexer::Lexer, tokens::{Span, Token, TokenKind}};
+use crate::{lexer::Lexer, tokens::{self, Span, Token, TokenKind}};
 
 fn lex(source: &str) -> Vec<Token> {
   Lexer::new(source).tokenize()
@@ -122,4 +122,11 @@ fn test_false() {
   let tokens = lex("false");
   assert_eq!(tokens.len(), 2);
   assert_eq!(tokens[0].kind, TokenKind::Boolean(false));
+}
+
+#[test]
+fn test_null() {
+  let tokens = lex("null");
+  assert_eq!(tokens.len(), 2);
+  assert_eq!(tokens[0].kind, TokenKind::Null);
 }
