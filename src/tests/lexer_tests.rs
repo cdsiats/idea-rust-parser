@@ -1,10 +1,10 @@
-use crate::{lexer::Lexer, tokens::{self, Span, Token, TokenKind}};
+use crate::{lexer::Lexer, tokens::*};
 
+#[allow(dead_code)]
 fn lex(source: &str) -> Vec<Token> {
   Lexer::new(source).tokenize()
 }
 
-#[cfg(test)]
 #[test]
 fn test_empty_input() {
   let tokens = lex("");
@@ -60,14 +60,14 @@ fn test_identifier() {
   assert_eq!(tokens.len(), 3);
   assert_eq!(tokens[0].kind, TokenKind::Enum);
   assert_eq!(tokens[0].span, Span { start: 0, end: 4 });
-  assert_eq!(tokens[1].kind, TokenKind::Identifier(String::from("Foo")));
+  assert_eq!(tokens[1].kind, TokenKind::Identifier("Foo".into()));
   assert_eq!(tokens[1].span, Span { start: 5, end: 8 });
 }
 
 #[test]
 fn test_string_literals() {
   let tokens = lex("\"hello\"");
-  assert_eq!(tokens[0].kind, TokenKind::StringLiteral(String::from("hello")));
+  assert_eq!(tokens[0].kind, TokenKind::StringLiteral("hello".into()));
   assert_eq!(tokens[0].span, Span { start: 0, end: 7 });
 }
 
