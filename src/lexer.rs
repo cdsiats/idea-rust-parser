@@ -83,6 +83,25 @@ impl<'a> Lexer<'a> {
             kind: TokenKind::StringLiteral(literal), 
             span: Span { start, end: self.position } });
         },
+        '@' => {
+          self.consume();
+          let mut attr = String::new();
+          attr.push('@');
+          while let Some(&c) = self.peek() {
+            if c.is_alphanumeric() || c == '_' || c == '.' || c == '-' {
+              attr.push(c);
+              self.consume();
+            } else { break; }
+          }
+          tokens.push(Token { 
+            kind: TokenKind::AttributeIdentifier(attr.into()), 
+            span: Span { start, end: self.position } 
+          });
+        },
+        '/' => {
+          self.consume();
+          todo!("Implement logic for skipping comments")
+        },
         c if c.is_digit(10) || c == '-' => {
           let mut num_str = String::new();
           if c == '-' { num_str.push('-'); self.consume(); }

@@ -1,4 +1,4 @@
-use crate::{lexer::Lexer, tokens::{Span, Token, TokenKind}};
+use crate::{lexer::Lexer, tokens::{self, Span, Token, TokenKind}};
 
 fn lex(source: &str) -> Vec<Token> {
   Lexer::new(source).tokenize()
@@ -99,4 +99,12 @@ fn test_use_keyword() {
   assert_eq!(tokens.len(), 2);
   assert_eq!(tokens[0].kind, TokenKind::Use);
   assert_eq!(tokens[0].span, Span { start: 0, end: 3 });
+}
+
+#[test]
+fn test_attribute_identifier() {
+  let tokens = lex("@label @is.cte");
+  assert_eq!(tokens.len(), 3);
+  assert_eq!(tokens[0].kind, TokenKind::AttributeIdentifier("@label".into()));
+  assert_eq!(tokens[1].kind, TokenKind::AttributeIdentifier("@is.cte".into()));
 }
