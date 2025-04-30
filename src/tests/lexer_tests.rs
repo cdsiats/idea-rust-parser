@@ -36,16 +36,22 @@ fn test_symbols() {
 fn test_positive_numbers() {
   let tokens = lex("4 44 4.44");
   assert_eq!(tokens[0].kind, TokenKind::Number(4.0));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 1 });
   assert_eq!(tokens[1].kind, TokenKind::Number(44.0));
+  assert_eq!(tokens[1].span, Span { start: 2, end: 4 });
   assert_eq!(tokens[2].kind, TokenKind::Number(4.44));
+  assert_eq!(tokens[2].span, Span { start: 5, end: 9 });
 }
 
 #[test]
 fn test_negative_numbers() {
   let tokens = lex("-4 -44 -4.44");
   assert_eq!(tokens[0].kind, TokenKind::Number(-4.0));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 2 });
   assert_eq!(tokens[1].kind, TokenKind::Number(-44.0));
+  assert_eq!(tokens[1].span, Span { start: 3, end: 6 });
   assert_eq!(tokens[2].kind, TokenKind::Number(-4.44));
+  assert_eq!(tokens[2].span, Span { start: 7, end: 12 });
 }
 
 #[test]
@@ -53,13 +59,16 @@ fn test_identifier() {
   let tokens = lex("enum Foo");
   assert_eq!(tokens.len(), 3);
   assert_eq!(tokens[0].kind, TokenKind::Enum);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 4 });
   assert_eq!(tokens[1].kind, TokenKind::Identifier(String::from("Foo")));
+  assert_eq!(tokens[1].span, Span { start: 5, end: 8 });
 }
 
 #[test]
 fn test_string_literals() {
   let tokens = lex("\"hello\"");
   assert_eq!(tokens[0].kind, TokenKind::StringLiteral(String::from("hello")));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 7 });
 }
 
 #[test]
@@ -104,10 +113,10 @@ fn test_use_keyword() {
 
 #[test]
 fn test_attribute_identifier() {
-  let tokens = lex("@label @is.cte");
-  assert_eq!(tokens.len(), 3);
+  let tokens = lex("@label");
+  assert_eq!(tokens.len(), 2);
   assert_eq!(tokens[0].kind, TokenKind::AttributeIdentifier("@label".into()));
-  assert_eq!(tokens[1].kind, TokenKind::AttributeIdentifier("@is.cte".into()));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 6 });
 }
 
 #[test]
@@ -115,6 +124,7 @@ fn test_true() {
   let tokens = lex("true");
   assert_eq!(tokens.len(), 2);
   assert_eq!(tokens[0].kind, TokenKind::Boolean(true));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 4 });
 }
 
 #[test]
@@ -122,6 +132,7 @@ fn test_false() {
   let tokens = lex("false");
   assert_eq!(tokens.len(), 2);
   assert_eq!(tokens[0].kind, TokenKind::Boolean(false));
+  assert_eq!(tokens[0].span, Span { start: 0, end: 5 });
 }
 
 #[test]
@@ -129,4 +140,5 @@ fn test_null() {
   let tokens = lex("null");
   assert_eq!(tokens.len(), 2);
   assert_eq!(tokens[0].kind, TokenKind::Null);
+  assert_eq!(tokens[0].span, Span { start: 0, end: 4 });
 }

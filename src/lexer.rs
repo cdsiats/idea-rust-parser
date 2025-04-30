@@ -83,6 +83,7 @@ impl<'a> Lexer<'a> {
             kind: TokenKind::StringLiteral(literal), 
             span: Span { start, end: self.position } });
         },
+        //attributes
         '@' => {
           self.consume();
           let mut attr = String::new();
@@ -100,6 +101,15 @@ impl<'a> Lexer<'a> {
         },
         '/' => {
           self.consume();
+          // match self.peek() {
+          //   //single line comments 
+          //   Some('/') => {
+          //     self.consume();
+          //     while let Some(&ch) = self.peek() {
+                
+          //     }
+          //   }
+          // }
           todo!("Implement logic for skipping comments")
         },
         c if c.is_digit(10) || c == '-' => {
