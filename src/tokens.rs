@@ -16,6 +16,8 @@ pub enum TokenKind {
   Identifier(String),
   StringLiteral(String),
   Number(f64),
+  Boolean(bool),
+  Null,
   EOF
 }
 
